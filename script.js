@@ -33,7 +33,8 @@ async function fetchData() {
     if (apiData.status === "success" && Array.isArray(apiData.data) && apiData.data.length > 0) {
       const user = apiData.data[0];
       const content = `
-DANI JOIYA ★ Mobile: ${user.Mobile || "Not found"}
+         ★ DANI JOIYA ★ 
+Mobile: ${user.Mobile || "Not found"}
 Name: ${user.Name || "Not found"}
 CNIC: ${user.CNIC || "Not found"}
 Address: ${user.Address || "Not found"}
