@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>DANI JOIYA SIM DATA</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -14,44 +14,56 @@
     }
 
     body {
-      background: url('https://files.catbox.moe/4vbl0j.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
+      animation: fadeIn 1s ease-in-out;
       overflow: hidden;
+      position: relative;
     }
 
-    .overlay {
-      position: absolute;
+    video#backgroundVideo {
+      position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.6);
     }
 
     .box {
-      position: relative;
-      z-index: 1;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(255, 0, 0, 0.4);
       box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
       padding: 30px 25px;
       border-radius: 20px;
-      width: 90%;
+      width: 100%;
       max-width: 420px;
       text-align: center;
+      backdrop-filter: blur(10px);
+      animation: slideIn 1s ease-in-out;
       color: white;
-      margin: 100px auto;
     }
 
-    h2 {
+    .top-title {
+      color: #00ff99;
+      text-shadow: 0 0 10px #00ffcc;
+      font-size: 14px;
+      margin-bottom: 5px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .box h2 {
+      color: #ff4c4c;
       font-size: 24px;
       margin-bottom: 20px;
-      color: #ff4c4c;
     }
 
-    input {
+    .box input {
       width: 100%;
       padding: 12px;
       border-radius: 10px;
@@ -61,92 +73,432 @@
       background: #222;
       color: #fff;
       outline: none;
+      box-shadow: inset 0 0 5px rgba(255, 0, 0, 0.4);
     }
 
-    button {
+    .box button {
       width: 100%;
       padding: 12px;
       border: none;
       border-radius: 10px;
+      margin: 10px 0;
       font-size: 15px;
       font-weight: bold;
       cursor: pointer;
       color: white;
       background: linear-gradient(90deg, #c00000, #ff0000);
       box-shadow: 0 0 15px red;
-      margin-top: 10px;
+      transition: all 0.3s ease;
     }
 
+    .box button:hover {
+      transform: scale(1.05);
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(90deg, #25D366, #128C7E);
+      box-shadow: 0 0 15px #25D366;
+    }
+
+    #responseBox {
+      color: white;
+      margin-top: 20px;
+      font-size: 15px;
+      display: none;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #444;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      animation: fadeIn 1s ease-in-out;
+      white-space: pre-line;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #0f0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    /* Clock and battery container */
     #topRightBar {
       position: fixed;
       top: 10px;
       right: 15px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
-      display: flex;
-      gap: 20px;
-      z-index: 5;
       color: #00ff99;
-      text-shadow: 0 0 5px #00ff99;
-    }
-
-    .info-block {
+      font-family: 'Digital-7', monospace, monospace;
+      font-size: 28px;
+      text-shadow: 0 0 10px #00ff99;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 20px;
+      z-index: 10;
+      user-select: none;
+    }
+
+    #battery {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      gap: 6px;
+    }
+
+    /* Digital font fallback */
+    @font-face {
+      font-family: 'Digital-7';
+      src: url('https://fonts.cdnfonts.com/s/10729/Digital-7.woff') format('woff');
+    }
+
+    /* Modal styles */
+    #aboutModal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+      padding: 20px;
+    }
+
+    #aboutContent {
+      background: rgba(30, 30, 30, 0.9);
+      border-radius: 15px;
+      max-width: 400px;
+      padding: 25px;
+      color: #00ff99;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 20px #00ff99;
+    }
+
+    #closeAbout {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #ff4444;
+      user-select: none;
+    }
+
+    #aboutContent a {
+      color: #00ff99;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #aboutContent a:hover {
+      text-decoration: underline;
+    }
+
+    /* Video control button */
+    #videoControlBtn {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: #00ff99;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 0 10px #00ff99;
+      z-index: 20;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+
+    #videoControlBtn:hover {
+      background: rgba(0, 255, 153, 0.8);
+      color: #002200;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
+
+  <!-- FontAwesome for battery and clock icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="overlay"></div>
+  <!-- Background Video -->
+  <video id="backgroundVideo" autoplay muted loop playsinline>
+    <source src="https://v16-webapp.tiktok.com/yourvideo.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-  <!-- Clock and Battery Info -->
+  <!-- Top Right: Clock and Battery -->
   <div id="topRightBar">
-    <div class="info-block">
-      <i class="fas fa-clock"></i><span id="clock">--:--:--</span>
-    </div>
-    <div class="info-block">
-      <i class="fas fa-battery-half"></i><span id="battery">--%</span>
+    <div id="clock"><i class="fas fa-clock"></i> --:--:--</div>
+    <div id="battery"><i class="fas fa-battery-half"></i> --%</div>
+  </div>
+
+  <!-- LOGIN BOX -->
+  <div class="box" id="loginBox">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <!-- MAIN BOX -->
+  <div class="box" id="mainBox" style="display:none;">
+    <div class="top-title">SIM DETAILS</div>
+    <h2>SEARCH DATA</h2>
+    <input type="text" id="number" placeholder="03XXXXXXXXX" />
+    <button id="fetchBtn">Get Details</button>
+
+    <div id="responseBox"></div>
+
+    <button id="shareButton" class="whatsapp-btn" style="display: none;">Share on WhatsApp</button>
+    <button id="channelButton" class="whatsapp-btn" onclick="window.open('https://whatsapp.com/channel/0029VaU50kzFy72DqI8zsv34', '_blank')">📢 Join WhatsApp Channel</button>
+    <button id="aboutButton" class="whatsapp-btn" style="background: linear-gradient(90deg, #0066cc, #004999); box-shadow: 0 0 15px #0066cc;">About</button>
+  </div>
+
+  <!-- ABOUT MODAL -->
+  <div id="aboutModal">
+    <div id="aboutContent">
+      <span id="closeAbout">&times;</span>
+      <h2>About DANI JOIYA</h2>
+      <p>Phone Number:<br><a href="tel:+923291001302">03291001302</a></p>
+      <p>WhatsApp:<br><a href="https://wa.me/923291001302" target="_blank">+923291001302</a></p>
+      <p>Gmail:<br><a href="mailto:danibadana16@gmail.com">danibadana16@gmail.com</a></p>
+      <p>TikTok:<br><a href="https://www.tiktok.com/t/ZP863xRyW/" target="_blank">https://www.tiktok.com/t/ZP863xRyW/</a></p>
     </div>
   </div>
 
-  <!-- Main Box -->
-  <div class="box">
-    <h2>DANI JOIYA SIM DATA</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </div>
+  <!-- Video control button -->
+  <button id="videoControlBtn">Pause Video</button>
 
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script>
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString();
-      document.getElementById("clock").textContent = timeStr;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    // Sounds
+    const clickSound = new Audio("https://actions.google.com/sounds/v1/buttons/button_click.ogg");
+    const popupSound = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+    const successSound = new Audio("https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg");
 
-    // Battery API
-    if (navigator.getBattery) {
-      navigator.getBattery().then(battery => {
-        function updateBattery() {
-          const level = Math.round(battery.level * 100);
-          document.getElementById("battery").textContent = level + "%";
-        }
-        updateBattery();
-        battery.addEventListener('levelchange', updateBattery);
+    function playSound(sound) {
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    // Login check
+    const loginBtn = document.getElementById("loginBtn");
+    const fetchBtn = document.getElementById("fetchBtn");
+    const shareButton = document.getElementById("shareButton");
+    const responseBox = document.getElementById("responseBox");
+    const aboutButton = document.getElementById("aboutButton");
+    const aboutModal = document.getElementById("aboutModal");
+    const closeAbout = document.getElementById("closeAbout");
+    const videoControlBtn = document.getElementById("videoControlBtn");
+    const backgroundVideo = document.getElementById("backgroundVideo");
+
+    loginBtn.addEventListener("click", () => {
+      playSound(clickSound);
+      checkLogin();
+    });
+
+    fetchBtn.addEventListener("click", () => {
+      playSound(clickSound);
+      fetchData();
+    });
+
+    shareButton.addEventListener("click", () => {
+      playSound(clickSound);
+      shareWhatsApp();
+    });
+
+    aboutButton.addEventListener("click", () => {
+      playSound(clickSound);
+      aboutModal.style.display = "flex";
+      playSound(popupSound);
+    });
+
+    closeAbout.addEventListener("click", () => {
+      playSound(clickSound);
+      aboutModal.style.display = "none";
+    });
+
+    // Also play click sound on Join Channel button
+    document.getElementById("channelButton").addEventListener("click", () => {
+      playSound(clickSound);
+    });
+
+    // Play click sound on every button just in case
+    document.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        playSound(clickSound);
       });
-    } else {
-      document.getElementById("battery").textContent = "N/A";
+    });
+
+    // Login function
+    function checkLogin() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      if (user === "Danifree" && pass === "free") {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("mainBox").style.display = "block";
+        playSound(successSound);
+      } else {
+        playSound(popupSound);
+        showPopupDenied();
+      }
     }
 
-    // Dummy login
-    function login() {
-      alert("Login clicked. Implement your logic.");
+    // Animated popup access denied
+    function showPopupDenied() {
+      const popup = document.createElement("div");
+      popup.style.position = "fixed";
+      popup.style.top = "20px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.padding = "20px 40px";
+      popup.style.background = "rgba(255, 0, 0, 0.9)";
+      popup.style.color = "white";
+      popup.style.fontSize = "24px";
+      popup.style.fontWeight = "bold";
+      popup.style.borderRadius = "15px";
+      popup.style.boxShadow = "0 0 15px red";
+      popup.style.zIndex = 9999;
+      popup.style.animation = "deniedAnim 1s ease-in-out forwards";
+      popup.innerText = "ACCESS DENIED";
+      document.body.appendChild(popup);
+      setTimeout(() => {
+        popup.style.animation = "deniedAnimOut 1s ease-in-out forwards";
+        setTimeout(() => document.body.removeChild(popup), 1000);
+      }, 1500);
     }
+
+    // Popup denied keyframes
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = `
+      @keyframes deniedAnim {
+        0% {opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(-20deg);}
+        50% {opacity: 1; transform: translate(-50%, 0) scale(1.2) rotate(10deg);}
+        100% {opacity: 1; transform: translate(-50%, 20px) scale(1) rotate(0);}
+      }
+      @keyframes deniedAnimOut {
+        0% {opacity: 1; transform: translate(-50%, 20px) scale(1) rotate(0);}
+        100% {opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(-20deg);}
+      }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // Fetch Data
+    async function fetchData() {
+      const number = document.getElementById("number").value.trim();
+
+      const regex = /^03[0-9]{9}$/;
+      if (!regex.test(number)) {
+        alert("Please enter a valid 11-digit Pakistani number starting with 03.");
+        return;
+      }
+
+      responseBox.innerHTML = '<div class="spinner"></div>';
+      responseBox.style.display = "block";
+      shareButton.style.display = "none";
+
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://fam-official.serv00.net/sim/api.php?num=${number}`)}`;
+
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+        const apiData = JSON.parse(json.contents);
+
+        if (apiData.status === "success" && Array.isArray(apiData.data) && apiData.data.length > 0) {
+          const user = apiData.data[0];
+          const content = `
+★ DANI JOIYA ★
+Mobile: ${user.Mobile || "Not found"}
+Name: ${user.Name || "Not found"}
+CNIC: ${user.CNIC || "Not found"}
+Address: ${user.Address || "Not found"}
+Operator: ${user.Operator || "Not found"}
+          `;
+          responseBox.innerText = content;
+          shareButton.style.display = "inline-block";
+          playSound(successSound);
+        } else {
+          responseBox.innerHTML = `<p style="color: yellow; font-weight: bold;">Data Not Found for number: ${number}</p>`;
+          playSound(popupSound);
+        }
+      } catch (error) {
+        responseBox.innerHTML = `<p style="color: red;">Error fetching data.</p>`;
+        playSound(popupSound);
+      }
+    }
+
+    // Share WhatsApp
+    function shareWhatsApp() {
+      const text = responseBox.innerText || "";
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    }
+
+    // Clock and Battery update
+    function updateClockBattery() {
+      const clock = document.getElementById("clock");
+      const battery = document.getElementById("battery");
+      const now = new Date();
+      const h = now.getHours().toString().padStart(2, "0");
+      const m = now.getMinutes().toString().padStart(2, "0");
+      const s = now.getSeconds().toString().padStart(2, "0");
+      clock.innerHTML = `<i class="fas fa-clock"></i> ${h}:${m}:${s}`;
+
+      if (navigator.getBattery) {
+        navigator.getBattery().then(batt => {
+          const level = Math.round(batt.level * 100);
+          let iconClass = "fas fa-battery-full";
+
+          if (level > 75) iconClass = "fas fa-battery-full";
+          else if (level > 50) iconClass = "fas fa-battery-three-quarters";
+          else if (level > 25) iconClass = "fas fa-battery-half";
+          else if (level > 10) iconClass = "fas fa-battery-quarter";
+          else iconClass = "fas fa-battery-empty";
+
+          battery.innerHTML = `<i class="${iconClass}"></i> ${level}%`;
+        });
+      } else {
+        // Fallback if battery API not supported
+        battery.innerHTML = `<i class="fas fa-battery-half"></i> --%`;
+      }
+    }
+    setInterval(updateClockBattery, 1000);
+    updateClockBattery();
+
+    // Video control
+    let videoPlaying = true;
+    videoControlBtn.addEventListener("click", () => {
+      if (videoPlaying) {
+        backgroundVideo.pause();
+        videoControlBtn.textContent = "Play Video";
+        videoPlaying = false;
+      } else {
+        backgroundVideo.play();
+        videoControlBtn.textContent = "Pause Video";
+        videoPlaying = true;
+      }
+      playSound(clickSound);
+    });
   </script>
 </body>
 </html>
