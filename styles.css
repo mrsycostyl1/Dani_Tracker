@@ -1,0 +1,116 @@
+/* General Body Styling */
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Box Container */
+.box {
+  background: #111;
+  border: 2px solid red;
+  box-shadow: 0 0 25px red;
+  padding: 30px 20px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Top Title */
+.top-title {
+  color: #0f0;
+  text-shadow: 0 0 10px #0f0;
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Headings */
+.box h2 {
+  color: red;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+  font-size: 16px;
+  background: #333;
+  color: white;
+  box-shadow: inset 0 0 5px red;
+}
+
+/* Primary Button */
+.box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(90deg, #c00000, #ff0000);
+  box-shadow: 0 0 15px red;
+  transition: 0.3s;
+}
+
+.box button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #ff0000, #c00000);
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+  background: linear-gradient(90deg, #25D366, #128C7E);
+  box-shadow: 0 0 15px #25D366;
+  color: white;
+}
+
+/* Response Box */
+#responseBox {
+  color: white;
+  margin-top: 20px;
+  font-size: 16px;
+  display: none;
+  animation: fadeIn 1s ease-in-out;
+  background: #222;
+  border: 1px solid #444;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+/* Clock & Battery */
+#clockBatteryContainer {
+  margin-bottom: 20px;
+}
+
+#clock, #battery {
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
+  color: hotpink;
+  text-shadow: 0 0 10px hotpink, 0 0 30px deeppink;
+  margin-bottom: 5px;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
