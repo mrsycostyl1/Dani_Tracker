@@ -4,40 +4,365 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>DANI JOIYA SIM DATA</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 0, 0, 0.4);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+      padding: 30px 25px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      animation: slideIn 1s ease-in-out;
+    }
+
+    .top-title {
+      color: #00ff99;
+      text-shadow: 0 0 10px #00ffcc;
+      font-size: 14px;
+      margin-bottom: 5px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .box h2 {
+      color: #ff4c4c;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .box input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 20px;
+      font-size: 15px;
+      background: #222;
+      color: #fff;
+      outline: none;
+      box-shadow: inset 0 0 5px rgba(255, 0, 0, 0.4);
+    }
+
+    .box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(90deg, #c00000, #ff0000);
+      box-shadow: 0 0 15px red;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .box button:hover {
+      transform: scale(1.05);
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(90deg, #25D366, #128C7E);
+      box-shadow: 0 0 15px #25D366;
+    }
+
+    #responseBox {
+      color: white;
+      margin-top: 20px;
+      font-size: 15px;
+      display: none;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #444;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      animation: fadeIn 1s ease-in-out;
+      white-space: pre-line;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #0f0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    .popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff0000;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      z-index: 1000;
+      opacity: 0;
+      animation: popupFade 0.3s ease forwards;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .popup i {
+      animation: pulseRed 1.5s infinite;
+      font-size: 20px;
+    }
+
+    @keyframes pulseRed {
+      0%, 100% { color: #ff0000; }
+      50% { color: #ff5555; }
+    }
+
+    @keyframes popupFade {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .status-bar {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      gap: 25px;
+      font-family: 'Orbitron', sans-serif;
+      color: #0f0;
+      font-size: 22px;
+      align-items: center;
+      user-select: none;
+      text-shadow: 0 0 6px #00ff00aa;
+    }
+
+    .status-bar i {
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <!-- AUDIO ALERT -->
-  <audio id="lowBatteryAlert" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
+  <!-- Status bar with clock and battery -->
+  <div class="status-bar">
+    <div id="clock"><i class="fas fa-clock"></i> --:--:--</div>
+    <div id="battery"><i class="fas fa-battery-full"></i> --%</div>
+  </div>
 
   <!-- LOGIN BOX -->
   <div class="box" id="loginBox">
     <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="checkLogin()">Login</button>
+    <input type="text" id="username" placeholder="Username" autocomplete="username"/>
+    <input type="password" id="password" placeholder="Password" autocomplete="current-password"/>
+    <button id="loginBtn">Login</button>
   </div>
 
   <!-- MAIN BOX -->
   <div class="box" id="mainBox" style="display:none;">
     <div class="top-title">SIM DETAILS</div>
     <h2>SEARCH DATA</h2>
-
-    <!-- CLOCK & BATTERY DISPLAY -->
-    <div id="clockBatteryContainer">
-      <div id="clock">Time: --:--:-- --</div>
-      <div id="battery">Battery: --%</div>
-    </div>
-
-    <input type="text" id="number" placeholder="03XXXXXXXXX" required pattern="^03[0-9]{9}$" />
-    <button onclick="fetchData()">Get Details</button>
+    <input type="text" id="number" placeholder="03XXXXXXXXX" />
+    <button id="fetchBtn">Get Details</button>
 
     <div id="responseBox"></div>
 
-    <button id="shareButton" class="whatsapp-btn" onclick="shareWhatsApp()" style="display: none;">Share on WhatsApp</button>
+    <button id="shareButton" class="whatsapp-btn" style="display: none;">Share on WhatsApp</button>
     <button id="channelButton" class="whatsapp-btn" onclick="window.open('https://whatsapp.com/channel/0029VaU50kzFy72DqI8zsv34', '_blank')">📢 Join WhatsApp Channel</button>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Audio elements for sounds -->
+  <audio id="clickSound" src="https://actions.google.com/sounds/v1/ui/click.ogg" preload="auto"></audio>
+  <audio id="popupSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+  <audio id="successSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+
+  <script>
+    // Elements
+    const loginBox = document.getElementById("loginBox");
+    const mainBox = document.getElementById("mainBox");
+    const responseBox = document.getElementById("responseBox");
+    const shareButton = document.getElementById("shareButton");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const numberInput = document.getElementById("number");
+    const loginBtn = document.getElementById("loginBtn");
+    const fetchBtn = document.getElementById("fetchBtn");
+
+    // Sounds
+    const clickSound = document.getElementById("clickSound");
+    const popupSound = document.getElementById("popupSound");
+    const successSound = document.getElementById("successSound");
+
+    // Play sound helper
+    function playSound(sound) {
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+    }
+
+    // Play click sound on all buttons
+    document.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        playSound(clickSound);
+      });
+    });
+
+    function showPopup(message) {
+      playSound(popupSound);
+      const popup = document.createElement("div");
+      popup.className = "popup";
+      popup.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+      document.body.appendChild(popup);
+      setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => popup.remove(), 300);
+      }, 2000);
+    }
+
+    function checkLogin() {
+      const user = usernameInput.value.trim();
+      const pass = passwordInput.value.trim();
+      if (user === "Danifree" && pass === "free") {
+        playSound(successSound);
+        loginBox.style.display = "none";
+        mainBox.style.display = "block";
+      } else {
+        showPopup("Access Denied");
+      }
+    }
+
+    async function fetchData() {
+      const number = numberInput.value.trim();
+
+      const regex = /^03[0-9]{9}$/;
+      if (!regex.test(number)) {
+        alert("Please enter a valid 11-digit Pakistani number starting with 03.");
+        return;
+      }
+
+      responseBox.innerHTML = '<div class="spinner"></div>';
+      responseBox.style.display = "block";
+      shareButton.style.display = "none";
+
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://fam-official.serv00.net/sim/api.php?num=${number}`)}`;
+
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+        const apiData = JSON.parse(json.contents);
+
+        if (apiData.status === "success" && Array.isArray(apiData.data) && apiData.data.length > 0) {
+          const user = apiData.data[0];
+          const content = `
+★ DANI JOIYA ★
+Mobile: ${user.Mobile || "Not found"}
+Name: ${user.Name || "Not found"}
+CNIC: ${user.CNIC || "Not found"}
+Address: ${user.Address || "Not found"}
+Operator: ${user.Operator || "Not found"}
+          `;
+          responseBox.innerText = content;
+          shareButton.style.display = "inline-block";
+        } else {
+          responseBox.innerHTML = `<p style="color: yellow; font-weight: bold;">Data Not Found</p>`;
+          shareButton.style.display = "none";
+        }
+      } catch (e) {
+        responseBox.innerHTML = `<p style="color: red; font-weight: bold;">Error fetching data. Try again later.</p>`;
+        shareButton.style.display = "none";
+      }
+    }
+
+    function shareWhatsApp() {
+      const text = encodeURIComponent(responseBox.innerText);
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    // Clock update
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString();
+      document.getElementById("clock").innerHTML = `<i class="fas fa-clock"></i> ${time}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Battery status
+    async function updateBatteryStatus() {
+      const batteryElem = document.getElementById("battery");
+      if (!navigator.getBattery) {
+        batteryElem.innerHTML = `<i class="fas fa-battery-empty"></i> N/A`;
+        return;
+      }
+      try {
+        const battery = await navigator.getBattery();
+        function setBatteryLevel() {
+          const levelPercent = Math.round(battery.level * 100);
+          let iconClass = "fa-battery-empty";
+          if(levelPercent > 80) iconClass = "fa-battery-full";
+          else if(levelPercent > 60) iconClass = "fa-battery-three-quarters";
+          else if(levelPercent > 40) iconClass = "fa-battery-half";
+          else if(levelPercent > 20) iconClass = "fa-battery-quarter";
+          else iconClass = "fa-battery-empty";
+          batteryElem.innerHTML = `<i class="fas ${iconClass}"></i> ${levelPercent}%`;
+        }
+        setBatteryLevel();
+        battery.addEventListener('levelchange', setBatteryLevel);
+        battery.addEventListener('chargingchange', setBatteryLevel);
+      } catch {
+        batteryElem.innerHTML = `<i class="fas fa-battery-empty"></i> N/A`;
+      }
+    }
+
+    updateBatteryStatus();
+
+    // Event listeners
+    loginBtn.addEventListener("click", checkLogin);
+    fetchBtn.addEventListener("click", fetchData);
+    shareButton.addEventListener("click", shareWhatsApp);
+  </script>
 </body>
 </html>
