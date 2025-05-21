@@ -1,0 +1,5 @@
+sim-data-app/
+├── index.html
+├── styles.css
+├── script.js
+└── vercel.json (optional for config)
