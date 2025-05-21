@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>DANI JOIYA SIM DATA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- AUDIO ALERT -->
+  <audio id="lowBatteryAlert" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
+  <!-- LOGIN BOX -->
+  <div class="box" id="loginBox">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="checkLogin()">Login</button>
+  </div>
+
+  <!-- MAIN BOX -->
+  <div class="box" id="mainBox" style="display:none;">
+    <div class="top-title">SIM DETAILS</div>
+    <h2>SEARCH DATA</h2>
+
+    <!-- CLOCK & BATTERY DISPLAY -->
+    <div id="clockBatteryContainer">
+      <div id="clock">Time: --:--:-- --</div>
+      <div id="battery">Battery: --%</div>
+    </div>
+
+    <input type="text" id="number" placeholder="03XXXXXXXXX" required pattern="^03[0-9]{9}$" />
+    <button onclick="fetchData()">Get Details</button>
+
+    <div id="responseBox"></div>
+
+    <button id="shareButton" class="whatsapp-btn" onclick="shareWhatsApp()" style="display: none;">Share on WhatsApp</button>
+    <button id="channelButton" class="whatsapp-btn" onclick="window.open('https://whatsapp.com/channel/0029VbAYdEy4yltXLpNTCa3j', '_blank')">📢 Join WhatsApp Channel</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
