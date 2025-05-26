@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PROFESSOR DATABASE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Orbitron', Arial, sans-serif;
+      background: radial-gradient(circle at center, #000010, #000000);
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      color: #0ff;
+    }
+
+    .float-text {
+      position: absolute;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0ff;
+      text-shadow: 0 0 6px #0ff, 0 0 12px #0ff, 0 0 20px #00ffff;
+      animation: floatText 20s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    @keyframes floatText {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(100vw, 100vh);
+      }
+    }
+
+    .clock-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 3;
+      color: #0ff;
+      background: rgba(0, 255, 255, 0.1);
+      padding: 12px 16px;
+      border-radius: 15px;
+      border: 2px solid #0ff;
+      font-size: 16px;
+      text-align: center;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .clock-container span {
+      display: block;
+      font-weight: bold;
+      text-shadow: 0 0 8px #0ff;
+    }
+
+    .box {
+      position: relative;
+      z-index: 4;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #0ff;
+      box-shadow: 0 0 8px #0ff, 0 0 20px #0ff inset;
+      padding: 40px 30px;
+      border-radius: 50px;
+      max-width: 420px;
+      width: 90%;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .top-title {
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #00ffffaa;
+      font-size: 18px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .box h2 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .box input {
+      width: 100%;
+      padding: 15px 25px;
+      border-radius: 30px;
+      border: 2px solid #0ff;
+      margin-bottom: 25px;
+      font-size: 18px;
+      background: transparent;
+      color: #0ff;
+      box-shadow: inset 0 0 10px #0ff;
+      outline: none;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+    }
+
+    .box input::placeholder {
+      color: #0ff99;
+      opacity: 0.8;
+    }
+
+    .box input:focus {
+      border-color: #00ffff;
+      box-shadow: 0 0 15px #00ffff, inset 0 0 20px #00ffff;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px 0;
+      border: none;
+      border-radius: 50px;
+      margin: 15px 0;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #000;
+      background: linear-gradient(90deg, #00ffff, #00aaff, #00ffff);
+      box-shadow: 0 0 15px #00ffff, 0 0 30px #00aaff inset;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,255,255,0.6) 0%, transparent 60%);
+      animation: rotate360 4s linear infinite;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(15px);
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn:hover {
+      color: #fff;
+      background: linear-gradient(90deg, #00ccff, #0088cc, #00ccff);
+      box-shadow: 0 0 25px #00ccff, 0 0 45px #0088cc inset;
+      transform: scale(1.08);
+    }
+
+    @keyframes rotate360 {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(90deg, #25D366, #128C7E);
+      box-shadow: 0 0 15px #25D366, inset 0 0 10px #128C7E;
+      color: #000;
+      font-weight: 700;
+    }
+
+    .whatsapp-btn::before {
+      background: radial-gradient(circle, rgba(37,211,102,0.7) 0%, transparent 60%);
+      filter: blur(12px);
+    }
+
+    .whatsapp-btn:hover {
+      background: linear-gradient(90deg, #128C7E, #25D366);
+      box-shadow: 0 0 25px #128C7E, inset 0 0 15px #25D366;
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    #responseBox {
+      color: #0ff;
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: 600;
+      display: none;
+      background: rgba(0, 255, 255, 0.05);
+      border: 2px solid #0ff;
+      padding: 20px;
+      border-radius: 30px;
+      text-align: left;
+      box-shadow: 0 0 10px #0ff;
+      white-space: pre-line;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Zaid Ashiq Texts -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const span = document.createElement('span');
+      span.className = 'float-text';
+      span.innerText = 'Zaid Ashiq';
+      span.style.top = Math.random() * 100 + 'vh';
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.fontSize = (12 + Math.random() * 18) + 'px';
+      span.style.animationDuration = (10 + Math.random() * 20) + 's';
+      document.body.appendChild(span);
+    }
+  </script>
+
+  <!-- Clock and Battery -->
+  <div class="clock-container">
+    <span id="clock">--:--:--</span>
+    <span id="battery">Battery: --%</span>
+  </div>
+
+  <!-- Main Box -->
+  <div class="box">
+    <div class="top-title">PROXARMY</div>
+    <h2>🔍 Search SIM Details</h2>
+    <input type="text" id="number" placeholder="Enter phone number" required />
+    <button class="btn" onclick="fetchData()"><span>🔎 Get Details</span></button>
+    <div id="responseBox"></div>
+    <button id="shareButton" class="btn whatsapp-btn" onclick="shareWhatsApp()" style="display: none;"><span>📲 Share on WhatsApp</span></button>
+    <button id="channelButton" class="btn whatsapp-btn" onclick="window.open('https://whatsapp.com/channel/0029VbAYdEy4yltXLpNTCa3j', '_blank')"><span>📢 Join WhatsApp Channel</span></button>
+  </div>
+
+  <script>
+    function isValidPhoneNumber(number) {
+      return /^\d{7,15}$/.test(number);
+    }
+
+    async function fetchData() {
+      const number = document.getElementById("number").value.trim();
+      const responseBox = document.getElementById("responseBox");
+      const shareButton = document.getElementById("shareButton");
+
+      shareButton.style.display = "none";
+      responseBox.style.display = "block";
+      responseBox.style.color = "#0ff";
+
+      if (!number) {
+        alert("Please enter a phone number.");
+        responseBox.style.display = "none";
+        return;
+      }
+
+      if (!isValidPhoneNumber(number)) {
+        alert("Please enter a valid phone number (digits only).");
+        responseBox.style.display = "none";
+        return;
+      }
+
+      responseBox.innerHTML = "Loading...";
+
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://fam-official.serv00.net/sim/api.php?num=${number}`)}`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Network response was not ok");
+        const json = await res.json();
+        const apiData = JSON.parse(json.contents);
+
+        if (apiData.status === "success" && Array.isArray(apiData.data) && apiData.data.length > 0) {
+          const user = apiData.data[0];
+          const content = `
+📞 Mobile: ${user.Mobile || "Not found"}
+👤 Name: ${user.Name || "Not found"}
+🆔 CNIC: ${user.CNIC || "Not found"}
+📍 Address: ${user.Address || "Not found"}
+📶 Operator: ${user.Operator || "Not found"}
+          `;
+          responseBox.innerText = content.trim();
+          shareButton.style.display = "inline-block";
+        } else {
+          responseBox.innerHTML = `<p style="color: #ff0; font-size: 20px; font-weight: 700;">Data Not Found</p>`;
+          shareButton.style.display = "none";
+        }
+      } catch (e) {
+        responseBox.innerHTML = `<p style="color: #f00; font-size: 20px; font-weight: 700;">Error fetching data. Please try again later.</p>`;
+        shareButton.style.display = "none";
+      }
+    }
+
+    function shareWhatsApp() {
+      const responseBox = document.getElementById("responseBox");
+      const text = encodeURIComponent(responseBox.innerText);
+      const url = `https://wa.me/?text=${text}`;
+      window.open(url, '_blank');
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString();
+      document.getElementById('clock').textContent = time;
+    }
+
+    async function updateBattery() {
+      if (navigator.getBattery) {
+        const battery = await navigator.getBattery();
+        const level = Math.round(battery.level * 100);
+        document.getElementById('battery').textContent = `Battery: ${level}%`;
+      }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    updateBattery();
+  </script>
+</body>
+</html>
